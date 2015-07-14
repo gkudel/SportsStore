@@ -1,0 +1,8 @@
+SportsStore.Domain/obj/*
+SportsStore.Domain/bin/*
+SportsStore.UnitTests/bin/*
+SportsStore.UnitTests/obj/*
+SportsStore.WebUI/obj/*
+SportsStore.WebUI/bin/*
+packages/*
+!packages/repositories.config

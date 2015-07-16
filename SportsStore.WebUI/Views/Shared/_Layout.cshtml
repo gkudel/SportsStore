@@ -21,6 +21,9 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "List", "Product", new { }, new { @class = "topnav_home" })</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Index", "Cart")"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+                </ul>
             </div>
         </div>
     </nav>

@@ -3,9 +3,21 @@
 <div class="panel panel-default">
     <div class="panel-heading">@Model.Name</div>
     <div class="panel-body">
-        @Model.Description
-        <br/>
-        <p class="text-left"><strong>$@Model.Price</strong></p>
+        @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { @id="Id_"+Model.ProductID}))
+        {
+            @Html.HiddenFor(x => x.ProductID)    
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)        
+            @Model.Description
+            <br/>
+            <div class="row">
+                <div class="col-md-4"><p class="text-left"><strong>$@Model.Price</strong></p></div>
+                <div class="col-md-8 text-right">
+                    <button type="submit" form="Id_@Model.ProductID" class="btn btn-info">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+                    </button>
+                </div>
+            </div>
+        }
     </div>
     <p></p>
 </div>

@@ -16,7 +16,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Sports Store", "List", "Product", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Sports Store", "List", "Product", new { }, new { @class = "navbar-brand" })
             </div> 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -28,7 +28,7 @@
 
     <div class="container-fluid top-buffer">        
         <div class="row  margin-top-20">
-            <div class="col-md-2"></div>
+            <div class="col-md-2">@{ Html.RenderAction("Menu", "Nav"); }</div>
             <div class="col-md-10">@RenderBody()</div>        
         </div>
         <hr />

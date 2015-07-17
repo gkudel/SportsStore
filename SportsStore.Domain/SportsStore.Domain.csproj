@@ -53,9 +53,14 @@
     <Compile Include="Concrete\EFProductRepository..cs" />
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Migrations\201507140618317_Init.cs" />
     <Compile Include="Migrations\201507140618317_Init.Designer.cs">
       <DependentUpon>201507140618317_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507170908322_ShippingDetail.cs" />
+    <Compile Include="Migrations\201507170908322_ShippingDetail.Designer.cs">
+      <DependentUpon>201507170908322_ShippingDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +72,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507140618317_Init.resx">
       <DependentUpon>201507140618317_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507170908322_ShippingDetail.resx">
+      <DependentUpon>201507170908322_ShippingDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

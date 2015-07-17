@@ -6,15 +6,16 @@
 
 <div class="panel-group">
     <div class="panel panel-primary">
-        <div class="panel-heading"><strong>Your cart</strong></div>
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-shopping-cart"></span> Your cart</strong></div>
         <div class="panel-body">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-center">Item</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Subtotal</th>
+                        <th class="text-center col-md-1">Quantity</th>
+                        <th class="text-center col-md-3">Item</th>
+                        <th class="text-left col-md-6">Price</th>
+                        <th class="text-center col-md-2">Subtotal</th>
+                        <th class="text-center col-md-1"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,8 +24,16 @@
                         <tr class="text-center">
                             <td>@line.Quantity</td>
                             <td>@line.Product.Name</td>
-                            <td>@line.Product.Price.ToString("c")</td>
+                            <td class="text-left">@line.Product.Price.ToString("c")</td>
                             <td>@((line.Quantity * line.Product.Price).ToString("c"))</td>
+                            <td>
+                                @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Post, new { @id = "Id_" + line.Product.ProductID })) 
+                                {
+                                    @Html.Hidden("productId", line.Product.ProductID)
+                                    @Html.HiddenFor(x => x.ReturnUrl)
+                                }
+                                <a href="javascript:void()" id="LinkId_@line.Product.ProductID" data-val-prodid="@line.Product.ProductID"><span class="glyphicon glyphicon-remove"></span></a>                                
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -32,10 +41,18 @@
                     <tr>
                         <td colspan="3" class="text-right"><p class="text-right"><strong>Total:</strong></p></td>
                         <td class="text-center"><strong>@Model.Cart.ComputeTotalValue().ToString("c")</strong></td>
+                        <td></td>
                     </tr>
                 </tfoot>
             </table>
-            <p class="text-center"><a href="@Model.ReturnUrl" class="btn btn-primary">Continue shopping</a></p>
+            <div class="text-right">
+                <a href="@Model.ReturnUrl"><span class="glyphicon glyphicon-arrow-left"></span> Continue shopping</a>
+                <a href="#" class="btn btn-primary btn-lg">Go to the checkout</a>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/cart")
+}

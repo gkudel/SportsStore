@@ -1,0 +1,14 @@
+﻿@model SportsStore.Domain.Entities.Cart
+
+<a href="@Url.Action("Index", "Cart")">
+    <span class="glyphicon glyphicon-shopping-cart"></span>
+    @if (Model.Lines.Count() == 0)
+    {
+        <strong>Cart</strong>
+    }
+    else
+    {
+        <strong>@Model.Lines.Sum(c => c.Quantity) item(s), @Model.ComputeTotalValue().ToString("c")</strong>
+    }
+</a>
+

@@ -47,7 +47,7 @@ namespace SportsStore.UnitTests
             Assert.AreEqual(results[0].Quantity, 11);
             Assert.AreEqual(results[1].Quantity, 1);
         }
-        
+
         [TestMethod]
         public void Can_Remove_Line()
         {
@@ -73,14 +73,14 @@ namespace SportsStore.UnitTests
         {
             Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
             Product p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
-            
+
             Cart target = new Cart();
-            
+
             target.AddItem(p1, 1);
             target.AddItem(p2, 1);
             target.AddItem(p1, 3);
             decimal result = target.ComputeTotalValue();
-         
+
             Assert.AreEqual(result, 450M);
         }
 
@@ -89,14 +89,14 @@ namespace SportsStore.UnitTests
         {
             Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
             Product p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
-            
+
             Cart target = new Cart();
-            
+
             target.AddItem(p1, 1);
             target.AddItem(p2, 1);
-            
+
             target.Clear();
-            
+
             Assert.AreEqual(target.Lines.Count(), 0);
         }
 
@@ -105,11 +105,11 @@ namespace SportsStore.UnitTests
         {
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[] {
-                new Product {ProductID = 1, Name = "P1", Category = "Apples"},
+                new Product {ProductID = 1, Name = "P1", Category = "Apples"}
             }.AsQueryable());
 
             Cart cart = new Cart();
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object, null);
 
             target.AddToCart(cart, 1, null);
 
@@ -118,16 +118,38 @@ namespace SportsStore.UnitTests
         }
 
         [TestMethod]
+        public void Can_Remove_From_Cart()
+        {
+            Product p1 = new Product { ProductID = 1, Name = "P1", Category = "Apples" };
+            Product p2 = new Product { ProductID = 2, Name = "P2", Category = "Pear" };
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] { p1, p2
+            }.AsQueryable());
+
+            Cart cart = new Cart();
+            cart.AddItem(p1, 1);
+            cart.AddItem(p2, 3);
+            cart.AddItem(p1, 2);
+
+            CartController target = new CartController(mock.Object, null);
+
+            target.RemoveFromCart(cart, 1, null);
+
+            Assert.AreEqual(cart.Lines.Count(), 1);
+            Assert.AreEqual(cart.Lines.ToArray()[0].Product.ProductID, 2);
+        }
+
+        [TestMethod]
         public void Adding_Product_To_Cart_Goes_To_Cart_Screen()
         {
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[] {
-                new Product {ProductID = 1, Name = "P1", Category = "Apples"},
+                new Product {ProductID = 1, Name = "P1", Category = "Apples"}
             }.AsQueryable());
 
             Cart cart = new Cart();
-            CartController target = new CartController(mock.Object);
-            
+            CartController target = new CartController(mock.Object, null);
+
             RedirectToRouteResult result = target.AddToCart(cart, 2, "myUrl");
 
             Assert.AreEqual(result.RouteValues["action"], "Index");
@@ -138,12 +160,59 @@ namespace SportsStore.UnitTests
         public void Can_View_Cart_Contents()
         {
             Cart cart = new Cart();
-            CartController target = new CartController(null);
+            CartController target = new CartController(null, null);
 
             CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
 
             Assert.AreSame(result.Cart, cart);
             Assert.AreEqual(result.ReturnUrl, "myUrl");
+        }
+
+        [TestMethod]
+        public void Cannot_Checkout_Empty_Cart()
+        {
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            Cart cart = new Cart();
+            ShippingDetails shippingDetails = new ShippingDetails();
+            CartController target = new CartController(null, mock.Object);
+
+            ViewResult result = target.Checkout(cart, shippingDetails);
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+
+            Assert.AreEqual("", result.ViewName);
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Cannot_Checkout_Invalid_ShippingDetails()
+        {
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            Cart cart = new Cart();
+            cart.AddItem(new Product(), 1);
+            CartController target = new CartController(null, mock.Object);
+            target.ModelState.AddModelError("error", "error");
+
+            ViewResult result = target.Checkout(cart, new ShippingDetails());
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+            Assert.AreEqual("", result.ViewName);
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Can_Checkout_And_Submit_Order()
+        {
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            Cart cart = new Cart();
+            cart.AddItem(new Product(), 1);
+            CartController target = new CartController(null, mock.Object);
+
+            ViewResult result = target.Checkout(cart, new ShippingDetails());
+            
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Once());
+            Assert.AreEqual("Completed", result.ViewName);
+            Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
         }
     }
 }

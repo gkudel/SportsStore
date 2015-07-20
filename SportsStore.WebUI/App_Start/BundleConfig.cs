@@ -23,8 +23,8 @@ namespace SportsStore.WebUI
             bundles.Add(new ScriptBundle("~/bundles/browser").Include(
                         "~/Scripts/browser.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/cart").Include(
-                    "~/Scripts/cart.js"));
+            bundles.Add(new ScriptBundle("~/bundles/site").Include(
+                    "~/Scripts/site.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

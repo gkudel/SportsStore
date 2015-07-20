@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SportsStore.Domain.Entities.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>All Products</h2>
+@if (TempData["savemessage"] != null)
+{
+    <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @TempData["savemessage"]
+    </div>
+}
+<table class="table">
+    <tr>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th class="text-right col-md-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th class="col-md-1"></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+         <td>
+            @Html.DisplayFor(modelItem => item.ProductID)
+        </td>
+        <td class="text-left">
+            @Html.ActionLink(item.Name, "Edit", new { item.ProductID })
+        </td>
+        <td class="text-right">
+            @item.Price.ToString("c")
+        </td>
+        <td class="text-right">
+            @using (Html.BeginForm("Delete", "Admin", FormMethod.Post, new { @id = "Id_" + item.ProductID }))
+            {
+                @Html.Hidden("ProductID", item.ProductID)
+            }
+            <a href="javascript:void()" id="LinkId_@item.ProductID" data-val-prodid="@item.ProductID"><span class="glyphicon glyphicon-remove"></span></a>                                
+        </td>
+    </tr>
+}
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/site")
+}

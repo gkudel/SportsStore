@@ -7,7 +7,7 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+@using (Html.BeginForm(ViewContext.RouteData.Values["action"].ToString(), "Admin", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
 {
     @Html.AntiForgeryToken()
     

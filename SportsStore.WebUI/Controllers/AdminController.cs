@@ -43,7 +43,31 @@ namespace SportsStore.WebUI.Controllers
             }
             else
             {
+                /*foreach (ModelState state in ViewData.ModelState.Values.Where(x => x.Errors.Count > 0))
+                {
+                    //state.Errors
+                }*/
                 return View(product);
+            }
+        }
+
+        public ViewResult Create()
+        {
+            return View("Edit");
+        }
+
+        [HttpPost]
+        public ActionResult Create([Bind(Exclude = "ProductID")]Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.SaveProduct(product);
+                TempData["savemessage"] = string.Format("{0} has been saved", product.Name);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Edit", product);
             }
         }
 	}

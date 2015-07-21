@@ -33,6 +33,7 @@ namespace SportsStore.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
@@ -51,5 +52,17 @@ namespace SportsStore.WebUI.Controllers
         {
             return View("Edit");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int ProductID)
+        {
+            Product deletedProduct = repository.DeleteProduct(ProductID);
+            if (deletedProduct != null)
+            {
+                TempData["savemessage"] = string.Format("{0} was deleted", deletedProduct.Name);
+            }
+            return RedirectToAction("Index");
+        }   
 	}
 }

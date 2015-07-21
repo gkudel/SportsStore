@@ -46,6 +46,7 @@
                             <td class="text-right">
                                 @using (Html.BeginForm("Delete", "Admin", FormMethod.Post, new { @id = "Id_" + item.ProductID }))
                                 {
+                                    @Html.AntiForgeryToken()
                                     @Html.Hidden("ProductID", item.ProductID)
                                 }
                                 <a href="javascript:void()" id="LinkId_@item.ProductID" data-val-prodid="@item.ProductID"><span class="glyphicon glyphicon-remove"></span></a>                                

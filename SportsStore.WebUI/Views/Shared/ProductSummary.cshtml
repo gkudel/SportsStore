@@ -5,6 +5,7 @@
     <div class="panel-body">
         @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { @id="Id_"+Model.ProductID}))
         {
+            @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.ProductID)    
             @Html.Hidden("returnUrl", Request.Url.PathAndQuery)        
             @Model.Description

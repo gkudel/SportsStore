@@ -29,6 +29,7 @@ namespace SportsStore.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult AddToCart(Cart cart, int ProductID, string returnUrl)
         {
             Product product = repository.Products
@@ -41,6 +42,7 @@ namespace SportsStore.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult RemoveFromCart(Cart cart, int productId, string returnUrl)
         {
             Product product = repository.Products
@@ -63,6 +65,7 @@ namespace SportsStore.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
         {
             if (cart.Lines.Count() == 0)

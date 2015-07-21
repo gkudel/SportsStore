@@ -29,6 +29,7 @@
                             <td>
                                 @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Post, new { @id = "Id_" + line.Product.ProductID })) 
                                 {
+                                    @Html.AntiForgeryToken()
                                     @Html.Hidden("productId", line.Product.ProductID)
                                     @Html.HiddenFor(x => x.ReturnUrl)
                                 }

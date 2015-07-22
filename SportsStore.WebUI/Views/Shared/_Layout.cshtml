@@ -22,6 +22,9 @@
                     <li>@Html.ActionLink("Home", "List", "Product", new { }, new { @class = "topnav_home" })</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Login", "Account")"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     <li>@{ Html.RenderAction("Summary", "Cart"); } </li>
                 </ul>
             </div>
@@ -35,7 +38,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+            <p>Sports Store - &copy; @DateTime.Now.Year</p>
         </footer>
     </div>
 

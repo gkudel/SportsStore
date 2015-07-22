@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #eee;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -35,14 +36,75 @@ textarea {
     margin-top:20px; 
 }
 
-div.panel-body {
-    background: #FAFAFA none repeat scroll 0% 0%;
-}
-
 .field-validation-valid {
     display: none;
 }
 
 .validation-summary-valid {
     display: none;
+}
+
+.field-validation-error { 
+    color: red; 
+    display: block; 
+}
+
+.input-validation-error { 
+    border: 1px solid red; 
+    background-color: #ffeeee; 
+}
+
+.panel-signin {
+  max-width: 450px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin {
+  max-width: 360px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-error {
+    display: inline;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin .form-submit {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
 }

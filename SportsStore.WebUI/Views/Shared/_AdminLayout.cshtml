@@ -21,6 +21,9 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Admin", new { }, new { @class = "topnav_home" })</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("SignOut", "Account")"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -29,7 +32,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+            <p>Sports Store - &copy; @DateTime.Now.Year</p>
         </footer>
     </div>
 

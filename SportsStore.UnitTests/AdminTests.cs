@@ -80,7 +80,7 @@ namespace SportsStore.UnitTests
             AdminController target = new AdminController(mock.Object);
             Product product = new Product { Name = "Test" };
 
-            ActionResult result = target.Edit(product);
+            ActionResult result = target.Edit(product, null);
 
             mock.Verify(m => m.SaveProduct(product));
             Assert.IsNotInstanceOfType(result, typeof(ViewResult));
@@ -94,7 +94,7 @@ namespace SportsStore.UnitTests
             Product product = new Product { Name = "Test" };
             target.ModelState.AddModelError("error", "error");
 
-            ActionResult result = target.Edit(product);
+            ActionResult result = target.Edit(product, null);
 
             mock.Verify(m => m.SaveProduct(It.IsAny<Product>()), Times.Never());
             Assert.IsInstanceOfType(result, typeof(ViewResult));

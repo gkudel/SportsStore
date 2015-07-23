@@ -108,3 +108,8 @@ textarea {
   width: 100%;
   text-align: center;
 }
+
+
+.form-horizontal .btn-upload {
+    margin-top: 10px;
+}

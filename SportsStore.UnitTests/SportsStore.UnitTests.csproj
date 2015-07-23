@@ -65,6 +65,7 @@
     <Compile Include="CartTest.cs" />
     <Compile Include="AdminTests.cs" />
     <Compile Include="AccountTest.cs" />
+    <Compile Include="ImageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SportsStore.Domain\SportsStore.Domain.csproj">

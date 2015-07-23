@@ -8,11 +8,23 @@
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.ProductID)    
             @Html.Hidden("returnUrl", Request.Url.PathAndQuery)        
-            @Model.Description
-            <br/>
             <div class="row">
-                <div class="col-md-4"><p class="text-left"><strong>$@Model.Price</strong></p></div>
-                <div class="col-md-8 text-right">
+                @{ var style = "col-md-12"; }
+                @if (Model.ImageData != null && Model.ImageData.Length > 0)
+                {
+                    style = "col-md-10";
+                    <div class="col-md-2">
+                        <img class="img-thumbnail img-responsive img-rounded" width="150" height="150" src="@Url.Action("GetImage", "Product", new { Model.ProductID} )" />                                          
+                    </div>
+                }
+                <div class="@style">
+                    @Model.Description
+                    <br/>
+                    <p class="text-left"><strong>$@Model.Price</strong></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class = "col-md-12 text-right">
                     <button type="submit" form="Id_@Model.ProductID" class="btn btn-primary">
                         <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
                     </button>
